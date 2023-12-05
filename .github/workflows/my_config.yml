@@ -22,3 +22,15 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
+      # Add these steps to build and push Docker image
+      - name: Build and push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v4
+        with:
+          image: subhadeepb98/iris_model
+          registry: docker.io
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+
+
