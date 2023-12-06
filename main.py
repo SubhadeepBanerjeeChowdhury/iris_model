@@ -1,7 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -17,7 +13,7 @@ def get_data(base_dir):
     data = {}
     for name in data_file_names:
         path_file = os.path.join(base_dir, name)
-        data = pd.read_csv(r"model\iris.csv")
+        data = pd.read_csv(r"C:\Users\Subhadeep\PycharmProjects\pythonProject6\model\iris.csv")
     return data
 
 
@@ -27,7 +23,7 @@ def split_data(data, test_size=0.2, random_state=42):
     y = df['variety']
 
     # Split the data into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
 
     return {'X_train': X_train, 'X_test': X_test, 'y_train': y_train, 'y_test': y_test}
 
@@ -39,12 +35,16 @@ def train_model(X_train, y_train):
 
 
 def save_model(model):
-    dump(model, "iris_prediction.joblib")
+    dump(model, "../model/iris_prediction.joblib")
     print("Model saved")
 
 
-def create_metrics(X_test, y_test, model):
-    model_report = classification_report(y_test, model.predict(X_test))
-    scores = roc_auc_score(y_test, model.predict_proba(X_test), multi_class='ovr')
 
-    return {'scores': scores, 'model_report': model_report}
+if __name__ == "__main__":
+    base_dir = r'C:\Users\Subhadeep\PycharmProjects\pythonProject6\model\iris.csv'
+    data = get_data(base_dir)
+
+    split_data = split_data(data['iris.csv'])
+
+    m = train_model(split_data['X_train'], split_data['y_train'])
+    save_model(m)
